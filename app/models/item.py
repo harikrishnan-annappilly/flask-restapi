@@ -5,12 +5,14 @@ class ItemModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False, unique=True)
     price = db.Column(db.Float(precision=3), nullable=False)
+    store_id = db.Column(db.Integer, db.ForeignKey('store_tbl.id'))
     
     def json(self):
         return {
             'ID': self.id,
             'name': self.name,
             'price': self.price,
+            'store': (self.store.name if self.store else None),
         }
 
     def save(self):

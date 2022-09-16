@@ -1,9 +1,11 @@
 from flask_restful import Resource, reqparse
 
 from app.models.item import ItemModel
+from app.models.store import StoreModel
 
 _item_parser = reqparse.RequestParser()
 _item_parser.add_argument('price', required=True, help='mandatory - hari')
+_item_parser.add_argument('store')
 
 class ItemResource(Resource):
     def get(self, name):
@@ -21,7 +23,8 @@ class ItemResource(Resource):
             }, 400
         payload = _item_parser.parse_args()
         price = payload.get('price')
-        item = ItemModel(name=name, price=price)
+        store = StoreModel.find_by_name(payload.get('store')) if payload.get('store') else None
+        item = ItemModel(name=name, price=price, store=store)
         item.save()
         return item.json(), 201
 

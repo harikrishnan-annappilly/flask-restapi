@@ -5,12 +5,14 @@ class StoreModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False, unique=True)
     location = db.Column(db.String(20), nullable=False)
+    items = db.relationship('ItemModel', backref='store')
     
     def json(self):
         return {
             'ID': self.id,
             'name': self.name,
             'location': self.location,
+            'items': [item.name for item in self.items],
         }
 
     def save(self):
