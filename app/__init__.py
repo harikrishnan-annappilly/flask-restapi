@@ -21,10 +21,13 @@ api = Api(app)
 
 from app.resources.user import UserResource, UsersResource
 from app.resources.item import ItemResource, ItemsResource
+from app.resources.store import StoreResource, StoresResource
 api.add_resource(UsersResource, '/users')
 api.add_resource(UserResource, '/user')
 api.add_resource(ItemsResource, '/items')
 api.add_resource(ItemResource, '/item/<string:name>')
+api.add_resource(StoresResource, '/stores')
+api.add_resource(StoreResource, '/store/<string:name>')
 
 @app.before_first_request
 def create_all():
