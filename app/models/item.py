@@ -11,6 +11,7 @@ class ItemModel(db.Model):
             'ID': self.id,
             'name': self.name,
             'price': self.price,
+            'stores': [store.name for store in self.stores]
         }
 
     def save(self):
