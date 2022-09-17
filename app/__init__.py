@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_restful import Api
+from flask_jwt_extended import JWTManager
 
 from .db import db
 
@@ -18,12 +19,15 @@ def index():
     return 'Home page revision 3'
 
 api = Api(app)
+jwt = JWTManager(app)
 
-from app.resources.user import UserResource, UsersResource
+from app.resources.user import UserResource, UsersResource, LoginResource, RefreshLoginResource
 from app.resources.item import ItemResource, ItemsResource
 from app.resources.store import StoreResource, StoresResource
 api.add_resource(UsersResource, '/users')
 api.add_resource(UserResource, '/user')
+api.add_resource(LoginResource, '/login')
+api.add_resource(RefreshLoginResource, '/refresh')
 api.add_resource(ItemsResource, '/items')
 api.add_resource(ItemResource, '/item/<string:name>')
 api.add_resource(StoresResource, '/stores')

@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required
 
 from app.models.item import ItemModel
 from app.models.store import StoreModel
@@ -8,6 +9,7 @@ _item_parser.add_argument('price', required=True, help='mandatory - hari')
 _item_parser.add_argument('store')
 
 class ItemResource(Resource):
+    @jwt_required()
     def get(self, name):
         item = ItemModel.find_by_name(name)
         if item is None:
